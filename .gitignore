@@ -1,0 +1,9 @@
+*.pt
+*.txt
+*.env
+myenv/
+__pycache__/
+*.pyc
+src/tokenizer/corpus/
+*.model
+!tokenizer/tokenizer.model
