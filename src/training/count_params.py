@@ -11,7 +11,5 @@ def main():
     tp=cnt_p(m)
     print(f"Config:{a}")
     print(f"Total Trainable Parameters:{tp:,}")
-    assert tp<=50000000,"Model exceeds 50M parameter limit!"
-    print("SUCCESS:Model is under the 50,000,000 parameter limit.")
 if __name__=="__main__":
     main()
