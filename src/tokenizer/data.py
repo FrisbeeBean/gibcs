@@ -14,16 +14,21 @@ def strm_sv(dp,nm,spt,of,tc="text",mr=2000000):
 def main():
     """Download datasets and create tokenizer corpus"""
     os.makedirs("corpus",exist_ok=True)
-    strm_sv("roneneldan/TinyStories",None,"train","corpus/tinystories.txt",mr=2000000)
-    strm_sv("HuggingFaceFW/fineweb-edu","sample-10BT","train","corpus/fineweb_edu.txt",mr=2000000)
-    with open("corpus/tokenizer_corpus.txt","w",encoding="utf-8") as outf:
-        with open("corpus/tinystories.txt","r",encoding="utf-8") as f1:
+    strm_sv("roneneldan/TinyStories",None,"train","corpus/ts.txt",mr=3000000)
+    strm_sv("HuggingFaceFW/fineweb-edu","sample-10BT","train","corpus/fw.txt",mr=5000000)
+    with open("corpus/tokenizer_corpus.txt","w",encoding="utf-8") as tf:
+        with open("corpus/ts.txt","r",encoding="utf-8") as f1:
             for i,l in enumerate(f1):
-                if i<1000000:outf.write(l)
+                if i<1000000:tf.write(l)
                 else:break
-        with open("corpus/fineweb_edu.txt","r",encoding="utf-8") as f2:
+        with open("corpus/fw.txt","r",encoding="utf-8") as f2:
             for i,l in enumerate(f2):
-                if i<1000000:outf.write(l)
+                if i<1000000:tf.write(l)
                 else:break
+    with open("corpus/train_corpus.txt","w",encoding="utf-8") as trf:
+        with open("corpus/ts.txt","r",encoding="utf-8") as f1:
+            for l in f1:trf.write(l)
+        with open("corpus/fw.txt","r",encoding="utf-8") as f2:
+            for l in f2:trf.write(l)
 if __name__=="__main__":
     main()

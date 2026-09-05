@@ -10,14 +10,14 @@ def ld_m():
     return loader(cp,tp)
 def main():
     """Runs Streamlit UI for inference"""
-    st.title("Model Inference")
+    st.title("Basic Model Inference")
     b=ld_m()
-    pmpt=st.text_area("User >>",height=200)
+    pmpt=st.text_area("User Question",height=200)
     if st.button("Generate"):
         if pmpt.strip():
             with st.spinner("Generating..."):
-                msg=b.gen(pmpt,mt=150,tmp=0.4,tk=40)
-                st.write("Model >>")
+                msg=b.gen(pmpt,max_tokens=50,temperature=0.1,top_k=10,top_p=0.85)
+                st.write("Model's Answer")
                 st.write(msg)
         else:
             st.warning("Please enter a prompt.")

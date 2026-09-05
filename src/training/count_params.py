@@ -5,7 +5,7 @@ def cnt_p(m):
     tp=sum(p.numel() for p in up if p.requires_grad)
     return tp
 def main():
-    """Initializes model and verifies total parameters are under 50M."""
+    """Initializes model and prints total parameter count"""
     a=modelargs()
     m=GIBCS(a)
     tp=cnt_p(m)

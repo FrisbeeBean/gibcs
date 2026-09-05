@@ -1,5 +1,4 @@
 import sentencepiece as spm
-import os
 def main():
     """Train BPE tokenizer"""
     dp="corpus/tokenizer_corpus.txt"

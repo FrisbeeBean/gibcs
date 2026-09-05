@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import math
+import torch.nn.functional as F
 from args import modelargs
 from rope import rotary_embedding
 from cache import KVcache
@@ -37,9 +37,6 @@ class MQA(nn.Module):
         if kvc is not None:ik,iv=kvc.change(ik,iv)
         ik=rpt_kv(ik,self.nr)
         iv=rpt_kv(iv,self.nr)
-        sc=torch.matmul(iq,ik.transpose(2,3))/math.sqrt(self.hd)
-        if msk is not None:sc=sc+msk
-        sc=torch.softmax(sc.float(),dim=-1).type_as(iq)
-        op=torch.matmul(sc,iv)
+        op=F.scaled_dot_product_attention(iq,ik,iv,attn_mask=msk)
         op=op.transpose(1,2).contiguous().view(bn,sn,-1)
         return self.wo(op)

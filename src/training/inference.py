@@ -13,10 +13,14 @@ class loader:
         self.eid=2
         self.m=GIBCS(self.a).to(d)
         c=torch.load(cp,map_location=self.d,weights_only=True)
-        self.m.load_state_dict(c['model_state'])
+        sd={}
+        for k,v in c['model_state'].items():
+            nk=k[10:] if k.startswith("_orig_mod.") else k
+            sd[nk]=v
+        self.m.load_state_dict(sd)
         self.m.eval()
     @torch.no_grad()
-    def gen(self,prompt,max_tokens=200,temperature=0.5,top_k=40,top_p=0.9):
+    def gen(self,prompt,max_tokens=200,temperature=0.2,top_k=10,top_p=0.9):
         """Generates text from given prompt"""
         tks=self.sp.Encode(prompt)
         tks=torch.tensor(tks,dtype=torch.long,device=self.d).unsqueeze(0)
